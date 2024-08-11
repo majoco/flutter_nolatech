@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sqlite_flutter_crud/JsonModels/note_model.dart';
+import 'package:sqlite_flutter_crud/JsonModels/cancha_model.dart';
 import 'package:sqlite_flutter_crud/SQLite/sqlite.dart';
 
-class CreateNote extends StatefulWidget {
-  const CreateNote({super.key});
+class CreateCancha extends StatefulWidget {
+  const CreateCancha({super.key});
 
   @override
-  State<CreateNote> createState() => _CreateNoteState();
+  State<CreateCancha> createState() => _CreateCanchaState();
 }
 
-class _CreateNoteState extends State<CreateNote> {
+class _CreateCanchaState extends State<CreateCancha> {
+  final id = TextEditingController();
   final title = TextEditingController();
-  final content = TextEditingController();
+  final tipo = TextEditingController();
+  final imagen = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   final db = DatabaseHelper();
@@ -19,17 +21,19 @@ class _CreateNoteState extends State<CreateNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create note"),
+        title: const Text("Create cancha"),
         actions: [
           IconButton(
               onPressed: () {
-                //Add Note button
+                //Add Cancha button
                 //We should not allow empty data to the database
                 if (formKey.currentState!.validate()) {
                   db
-                      .createNote(NoteModel(
-                          noteTitle: title.text,
-                          noteContent: content.text,
+                      .createCancha(CanchaModel(
+                          canchaId: id.text as int,
+                          canchaTitle: title.text,
+                          canchaType: tipo.text,
+                          canchaImagen: imagen.text,
                           createdAt: DateTime.now().toIso8601String()))
                       .whenComplete(() {
                     //When this value is true
@@ -60,15 +64,27 @@ class _CreateNoteState extends State<CreateNote> {
                   ),
                 ),
                 TextFormField(
-                  controller: content,
+                  controller: tipo,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Content is required";
+                      return "Type is required";
                     }
                     return null;
                   },
                   decoration: const InputDecoration(
-                    label: Text("Content"),
+                    label: Text("Type"),
+                  ),
+                ),
+                TextFormField(
+                  controller: imagen,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Imagen is required";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    label: Text("Imagen"),
                   ),
                 ),
               ],

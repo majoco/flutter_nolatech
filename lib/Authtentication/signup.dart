@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqlite_flutter_crud/Authtentication/login.dart';
 import 'package:sqlite_flutter_crud/JsonModels/users.dart';
 import 'package:sqlite_flutter_crud/SQLite/sqlite.dart';
+import 'package:sqlite_flutter_crud/Views/home.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -45,7 +46,7 @@ class _SignUpState extends State<SignUp> {
                   //As we assigned our controller to the textformfields
 
                   Container(
-                    margin: EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(8),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
@@ -189,7 +190,17 @@ class _SignUpState extends State<SignUp> {
                           },
                           child: const Text("Login"))
                     ],
-                  )
+                  ),
+
+                  TextButton(
+                      onPressed: () {
+                        //Navigate to sign up
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Home()));
+                      },
+                      child: const Text("HOME")),
                 ],
               ),
             ),
