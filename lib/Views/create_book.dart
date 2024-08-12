@@ -12,8 +12,9 @@ class CreateBook extends StatefulWidget {
 class _CreateBookState extends State<CreateBook> {
   final canchaId = TextEditingController();
   final userId = TextEditingController();
-  final reservedStart = TextEditingController();
-  final reservedEnd = TextEditingController();
+  final fecha = TextEditingController();
+  final horaInicio = TextEditingController();
+  final horaFin = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   final db = DatabaseHelper();
@@ -32,8 +33,9 @@ class _CreateBookState extends State<CreateBook> {
                       .createBook(BookModel(
                           canchaId: canchaId.text as int,
                           userId: userId.text as int,
-                          reservedStart: reservedStart.text,
-                          reservedEnd: reservedEnd.text,
+                          fecha: fecha.text,
+                          horaInicio: horaInicio.text,
+                          horaFin: horaFin.text,
                           createdAt: DateTime.now().toIso8601String()))
                       .whenComplete(() {
                     //When this value is true
@@ -76,7 +78,7 @@ class _CreateBookState extends State<CreateBook> {
                   ),
                 ),
                 TextFormField(
-                  controller: reservedStart,
+                  controller: fecha,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Fecha de inicio is required";
@@ -88,7 +90,19 @@ class _CreateBookState extends State<CreateBook> {
                   ),
                 ),
                 TextFormField(
-                  controller: reservedEnd,
+                  controller: horaInicio,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Fecha de inicio is required";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    label: Text("Fecha de Inicio"),
+                  ),
+                ),
+                TextFormField(
+                  controller: horaFin,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Fecha de fin is required";

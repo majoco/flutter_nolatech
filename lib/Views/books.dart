@@ -19,8 +19,9 @@ class _BooksState extends State<Books> {
   final bookId = TextEditingController();
   final canchaId = TextEditingController();
   final userId = TextEditingController();
-  final reservedStart = TextEditingController();
-  final reservedEnd = TextEditingController();
+  final fecha = TextEditingController();
+  final horaInicio = TextEditingController();
+  final horaFin = TextEditingController();
   final keyword = TextEditingController();
 
   @override
@@ -57,7 +58,7 @@ class _BooksState extends State<Books> {
         appBar: AppBar(
           title: const Text("Reservaciones"),
         ),
-        floatingActionButton: FloatingActionButton(
+        /*floatingActionButton: FloatingActionButton(
           onPressed: () {
             //We need call refresh method after a new book is created
             //Now it works properly
@@ -72,36 +73,9 @@ class _BooksState extends State<Books> {
             });
           },
           child: const Icon(Icons.add),
-        ),
+        ),*/
         body: Column(
           children: [
-            //Search Field here
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.2),
-                  borderRadius: BorderRadius.circular(8)),
-              child: TextFormField(
-                controller: keyword,
-                onChanged: (value) {
-                  //When we type something in textfield
-                  if (value.isNotEmpty) {
-                    setState(() {
-                      books = searchBook();
-                    });
-                  } else {
-                    setState(() {
-                      books = getAllBooks();
-                    });
-                  }
-                },
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    icon: Icon(Icons.search),
-                    hintText: "Search"),
-              ),
-            ),
             Expanded(
               child: FutureBuilder<List<BookModel>>(
                 future: books,
@@ -118,10 +92,21 @@ class _BooksState extends State<Books> {
                     return ListView.builder(
                         itemCount: items.length,
                         itemBuilder: (context, index) {
+                          var can = '';
+                          if (items[index].canchaId == 1) {
+                            can = 'Epic Box';
+                          } else if (items[index].canchaId == 2) {
+                            can = 'Rusty Tenis';
+                          } else if (items[index].canchaId == 3) {
+                            can = 'Cancha Multiple';
+                          }
                           return ListTile(
-                            subtitle: Text(DateFormat("yMd").format(
-                                DateTime.parse(items[index].createdAt))),
-                            title: Text(items[index].canchaId as String),
+                            subtitle: Text(items[index].fecha +
+                                ' ' +
+                                items[index].horaInicio +
+                                ' ' +
+                                items[index].horaFin),
+                            title: Text(can),
                             trailing: IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () {
@@ -141,8 +126,9 @@ class _BooksState extends State<Books> {
                                 final int? bookId;
                                 canchaId.text = items[index].canchaId as String;
                                 userId.text = items[index].userId as String;
-                                reservedStart.text = items[index].reservedStart;
-                                reservedEnd.text = items[index].reservedEnd;
+                                fecha.text = items[index].fecha;
+                                horaInicio.text = items[index].horaInicio;
+                                horaFin.text = items[index].horaFin;
                               });
                               showDialog(
                                   context: context,
@@ -158,8 +144,9 @@ class _BooksState extends State<Books> {
                                                     .updateBook(
                                                         canchaId.value as int,
                                                         userId.text as int,
-                                                        reservedStart.text,
-                                                        reservedEnd.text,
+                                                        fecha.text,
+                                                        horaInicio.text,
+                                                        horaFin.text,
                                                         items[index].bookId
                                                             as int)
                                                     .whenComplete(() {
@@ -209,7 +196,7 @@ class _BooksState extends State<Books> {
                                               ),
                                             ),
                                             TextFormField(
-                                              controller: reservedStart,
+                                              controller: fecha,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
                                                   return "Fecha de inicio is required";
@@ -217,11 +204,23 @@ class _BooksState extends State<Books> {
                                                 return null;
                                               },
                                               decoration: const InputDecoration(
-                                                label: Text("Fecha de inicio"),
+                                                label: Text("Fecha"),
                                               ),
                                             ),
                                             TextFormField(
-                                              controller: reservedEnd,
+                                              controller: horaInicio,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return "Fecha is required";
+                                                }
+                                                return null;
+                                              },
+                                              decoration: const InputDecoration(
+                                                label: Text("Hora inicio"),
+                                              ),
+                                            ),
+                                            TextFormField(
+                                              controller: horaFin,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
                                                   return "Fecha final is required";
@@ -229,7 +228,7 @@ class _BooksState extends State<Books> {
                                                 return null;
                                               },
                                               decoration: const InputDecoration(
-                                                label: Text("Fecha final"),
+                                                label: Text("Hora final"),
                                               ),
                                             ),
                                           ]),

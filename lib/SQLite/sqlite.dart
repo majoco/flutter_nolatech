@@ -6,7 +6,7 @@ import 'package:sqlite_flutter_crud/JsonModels/book_model.dart';
 import 'package:sqlite_flutter_crud/JsonModels/users.dart';
 
 class DatabaseHelper {
-  final databaseName = "canchas17.db";
+  final databaseName = "canchas18.db";
   String noteTable =
       "CREATE TABLE notes (noteId INTEGER PRIMARY KEY AUTOINCREMENT, noteTitle TEXT NOT NULL, noteContent TEXT NOT NULL, createdAt TEXT DEFAULT CURRENT_TIMESTAMP)";
 
@@ -21,7 +21,7 @@ class DatabaseHelper {
       "INSERT INTO canchas(canchaTitle, canchaType, canchaImagen) values('Cancha Multiple','Cancha Tipo C', 'lib/assets/cancha3.png')";
 
   String bookTable =
-      "CREATE TABLE books (bookId INTEGER PRIMARY KEY AUTOINCREMENT, canchaId INTEGER, userId INTEGER, reservedStart TEXT NOT NULL, reservedEnd TEXT NOT NULL, createdAt TEXT DEFAULT CURRENT_TIMESTAMP)";
+      "CREATE TABLE books (bookId INTEGER PRIMARY KEY AUTOINCREMENT, canchaId INTEGER, userId INTEGER, fecha TEXT NOT NULL, horaInicio TEXT NOT NULL, horaFin TEXT NOT NULL, createdAt TEXT DEFAULT CURRENT_TIMESTAMP)";
 
   //Now we must create our user table into our sqlite db
 
@@ -184,11 +184,11 @@ class DatabaseHelper {
   }
 
   //Update Books
-  Future<int> updateBook(int canchaId, int userId, String reservedStart,
-      String reservedEnd, int bookId) async {
+  Future<int> updateBook(int canchaId, int userId, String fecha,
+      String horaInicio, String horaFin, int bookId) async {
     final Database db = await initDB();
     return db.rawUpdate(
-        'update books set canchaId = ?, userId = ?, reservedStart = ?, reservedEnd = ? where bookId = ?',
-        [canchaId, userId, reservedStart, reservedEnd, bookId]);
+        'update books set canchaId = ?, userId = ?, fecha = ?, horaInicio = ?, horaFin = ? where bookId = ?',
+        [canchaId, userId, fecha, horaInicio, horaFin, bookId]);
   }
 }
