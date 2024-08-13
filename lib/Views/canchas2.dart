@@ -186,8 +186,7 @@ class _CanchasState extends State<Canchas2> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
                           child: Text(
-                              (userNameGlobal[0].toUpperCase() +
-                                  userNameGlobal.substring(1).toLowerCase()),
+                              ('Hola ${userNameGlobal[0].toUpperCase()}${userNameGlobal.substring(1).toLowerCase()}!'),
                               style: const TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold)),
                         ),
