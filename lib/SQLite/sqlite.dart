@@ -4,6 +4,7 @@ import 'package:sqlite_flutter_crud/JsonModels/cancha_model.dart';
 import 'package:sqlite_flutter_crud/JsonModels/note_model.dart';
 import 'package:sqlite_flutter_crud/JsonModels/book_model.dart';
 import 'package:sqlite_flutter_crud/JsonModels/users.dart';
+import 'package:sqlite_flutter_crud/Views/variables.dart';
 
 class DatabaseHelper {
   final databaseName = "canchas19.db";
@@ -139,6 +140,14 @@ class DatabaseHelper {
     return result.map((e) => Users.fromMap(e)).toList();
   }
 
+  //Get user
+  Future<List<Users>> getUser(id) async {
+    final Database db = await initDB();
+    List<Map<String, Object?>> result =
+        await db.query('select * from users where usrId = ?', whereArgs: [id]);
+    return result.map((e) => Users.fromMap(e)).toList();
+  }
+
   //Get cancha
   Future<List<CanchaModel>> getCancha(int canchaId) async {
     final Database db = await initDB();
@@ -183,6 +192,29 @@ class DatabaseHelper {
     List<Map<String, Object?>> result = await db.query('books');
     return result.map((e) => BookModel.fromMap(e)).toList();
   }
+
+  /*Future<List<dynamic>> getReservas() async {
+    final Database db = await initDB();
+
+    List> result = await db.query('SELECT * FROM users');
+
+    return result;
+  }*/
+
+  /*Stream<List<EntryWithCategory>> entriesWithCategory() {
+    final query = select(todoItems).join([
+      leftOuterJoin(categories, categories.id.equalsExp(todoItems.category)),
+    ]);
+
+    return query.watch().map((rows) {
+      return rows.map((row) {
+        return EntryWithCategory(
+          row.readTable(todoItems),
+          row.readTableOrNull(categories),
+        );
+      }).toList();
+    });
+  }*/
 
   //Delete Books
   Future<int> deleteBook(int id) async {

@@ -113,6 +113,7 @@ class MyRecordState extends State<MyRecord> {
                                 onTap: () {
                                   _selectDate();
                                 }),
+                            const SizedBox(height: 10),
                             DropdownButtonFormField<String>(
                               value: _selectedItem,
                               onChanged: (String? value) {
@@ -143,6 +144,7 @@ class MyRecordState extends State<MyRecord> {
                                 );
                               }).toList(),
                             ),
+                            const SizedBox(height: 10),
                             DropdownButtonFormField<String>(
                               value: _selectedItem2,
                               onChanged: (String? value) {

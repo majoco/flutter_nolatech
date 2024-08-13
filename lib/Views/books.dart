@@ -12,6 +12,7 @@ class Books extends StatefulWidget {
 class _BooksState extends State<Books> {
   late DatabaseHelper handler;
   late Future<List<BookModel>> books;
+
   final db = DatabaseHelper();
 
   final bookId = TextEditingController();
@@ -26,16 +27,24 @@ class _BooksState extends State<Books> {
   void initState() {
     handler = DatabaseHelper();
     books = handler.getBooks();
+    //reservas = handler.getReservas();
 
     handler.initDB().whenComplete(() {
       books = getAllBooks();
     });
+    /*handler.initDB().whenComplete(() {
+      reservas = getAllReservas();
+    });*/
     super.initState();
   }
 
   Future<List<BookModel>> getAllBooks() {
     return handler.getBooks();
   }
+
+  /*Future<List<dynamic>> getAllReservas() {
+    return handler.getReservas();
+  }*/
 
   //Search method here
   //First we have to create a method in Database helper class
@@ -75,10 +84,10 @@ class _BooksState extends State<Books> {
         body: Column(
           children: [
             Expanded(
-              child: FutureBuilder<List<BookModel>>(
+              child: FutureBuilder<List<dynamic>>(
                 future: books,
                 builder: (BuildContext context,
-                    AsyncSnapshot<List<BookModel>> snapshot) {
+                    AsyncSnapshot<List<dynamic>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasData && snapshot.data!.isEmpty) {
@@ -86,7 +95,7 @@ class _BooksState extends State<Books> {
                   } else if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   } else {
-                    final items = snapshot.data ?? <BookModel>[];
+                    final items = snapshot.data ?? <dynamic>[];
                     return ListView.builder(
                         itemCount: items.length,
                         itemBuilder: (context, index) {
@@ -99,7 +108,8 @@ class _BooksState extends State<Books> {
                             can = 'Cancha Multiple';
                           }
                           return ListTile(
-                            subtitle: Text('${items[index].fecha} ${items[index].horaInicio} ${items[index].horaFin}'),
+                            subtitle: Text(
+                                '${items[index].fecha} ${items[index].horaInicio} ${items[index].horaFin}'),
                             title: Text(can),
                             trailing: IconButton(
                               icon: const Icon(Icons.delete),

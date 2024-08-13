@@ -288,13 +288,10 @@ class _CanchasState extends State<Canchas2> {
                                                           cancha: items[index],
                                                           key: null,
                                                         ),*/
-                                                              CanchaDetalle(
-                                                                  canchaId: items[
-                                                                          index]
-                                                                      .canchaId,
-                                                                  canchaTitle: items[
-                                                                          index]
-                                                                      .canchaTitle)));
+                                                              MyRecord(
+                                                                cancha: items[
+                                                                    index],
+                                                              )));
                                                 } else if (canchaId == 2) {
                                                   Navigator.push(
                                                       context,
@@ -309,13 +306,10 @@ class _CanchasState extends State<Canchas2> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              CanchaDetalle3(
-                                                                  canchaId: items[
-                                                                          index]
-                                                                      .canchaId,
-                                                                  canchaTitle: items[
-                                                                          index]
-                                                                      .canchaTitle)));
+                                                              MyRecord(
+                                                                cancha: items[
+                                                                    index],
+                                                              )));
                                                 }
                                               },
                                               child: const Text('Reservar',
