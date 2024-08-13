@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sqlite_flutter_crud/JsonModels/book_model.dart';
 import 'package:sqlite_flutter_crud/SQLite/sqlite.dart';
-import 'package:sqlite_flutter_crud/Views/create_book.dart';
 
 class Books extends StatefulWidget {
   const Books({super.key});
@@ -101,11 +99,7 @@ class _BooksState extends State<Books> {
                             can = 'Cancha Multiple';
                           }
                           return ListTile(
-                            subtitle: Text(items[index].fecha +
-                                ' ' +
-                                items[index].horaInicio +
-                                ' ' +
-                                items[index].horaFin),
+                            subtitle: Text('${items[index].fecha} ${items[index].horaInicio} ${items[index].horaFin}'),
                             title: Text(can),
                             trailing: IconButton(
                               icon: const Icon(Icons.delete),

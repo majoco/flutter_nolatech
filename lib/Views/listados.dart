@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sqlite_flutter_crud/Views/books.dart';
-import 'package:sqlite_flutter_crud/Views/canchas.dart';
 import 'package:sqlite_flutter_crud/Views/canchas2.dart';
 
 /// Flutter code sample for [BottomNavigationBar].

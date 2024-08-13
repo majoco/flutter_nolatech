@@ -15,6 +15,8 @@ class _SignUpState extends State<SignUp> {
   final username = TextEditingController();
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
+  final useremail = TextEditingController();
+  final usertelefono = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -34,7 +36,7 @@ class _SignUpState extends State<SignUp> {
                   "lib/assets/login_header.png",
                   width: MediaQuery.of(context).size.width,
                 ),
-                Text('Registro',
+                const Text('Registro',
                     style: TextStyle(
                       fontSize: 20,
                     )),
@@ -52,8 +54,9 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.deepPurple.withOpacity(.2)),
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
                         child: TextFormField(
                           controller: username,
                           validator: (value) {
@@ -63,10 +66,48 @@ class _SignUpState extends State<SignUp> {
                             return null;
                           },
                           decoration: const InputDecoration(
-                            icon: Icon(Icons.person),
-                            border: InputBorder.none,
-                            hintText: "Username",
-                          ),
+                              icon: Icon(Icons.person),
+                              border: InputBorder.none,
+                              hintText: "Username",
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              )),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
+                        child: TextFormField(
+                          controller: useremail,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "email is required";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                              icon: Icon(Icons.person),
+                              border: InputBorder.none,
+                              hintText: "Email",
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              )),
                         ),
                       ),
 
@@ -76,8 +117,9 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.deepPurple.withOpacity(.2)),
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
                         child: TextFormField(
                           controller: password,
                           validator: (value) {
@@ -91,6 +133,14 @@ class _SignUpState extends State<SignUp> {
                               icon: const Icon(Icons.lock),
                               border: InputBorder.none,
                               hintText: "Password",
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
                               suffixIcon: IconButton(
                                   onPressed: () {
                                     //In here we will create a click to show and hide the password a toggle button
@@ -113,7 +163,7 @@ class _SignUpState extends State<SignUp> {
                             horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: Colors.deepPurple.withOpacity(.2)),
+                            color: Colors.white),
                         child: TextFormField(
                           controller: confirmPassword,
                           validator: (value) {
@@ -129,6 +179,14 @@ class _SignUpState extends State<SignUp> {
                               icon: const Icon(Icons.lock),
                               border: InputBorder.none,
                               hintText: "Password",
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
                               suffixIcon: IconButton(
                                   onPressed: () {
                                     //In here we will create a click to show and hide the password a toggle button
@@ -140,6 +198,37 @@ class _SignUpState extends State<SignUp> {
                                   icon: Icon(isVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off))),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
+                        child: TextFormField(
+                          controller: usertelefono,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "telefono is required";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                              icon: Icon(Icons.person),
+                              border: InputBorder.none,
+                              hintText: "Telefono",
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              )),
                         ),
                       ),
 
@@ -160,7 +249,9 @@ class _SignUpState extends State<SignUp> {
                                 db
                                     .signup(Users(
                                         usrName: username.text,
-                                        usrPassword: password.text))
+                                        usrEmail: useremail.text,
+                                        usrPassword: password.text,
+                                        usrTelefono: usertelefono.text))
                                     .whenComplete(() {
                                   //After success user creation go to login screen
                                   Navigator.push(

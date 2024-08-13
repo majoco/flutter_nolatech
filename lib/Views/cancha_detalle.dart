@@ -91,7 +91,7 @@ class _CanchasState extends State<CanchaDetalle> {
 
                 return SingleChildScrollView(
                     child: Padding(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,

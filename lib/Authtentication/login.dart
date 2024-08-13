@@ -5,6 +5,7 @@ import 'package:sqlite_flutter_crud/SQLite/sqlite.dart';
 import 'package:sqlite_flutter_crud/Views/listados.dart';
 //import 'package:sqlite_flutter_crud/Views/notes.dart';
 import 'package:sqlite_flutter_crud/Views/home.dart';
+import 'package:sqlite_flutter_crud/Views/variables.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   //TextEditing controller to control the text when we enter into it
   final username = TextEditingController();
   final password = TextEditingController();
+  final useremail = TextEditingController();
+  final usertelefono = TextEditingController();
 
   //A bool variable for show and hide password
   bool isVisible = false;
@@ -30,11 +33,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //Now we should call this function in login button
   login() async {
-    var response = await db
-        .login(Users(usrName: username.text, usrPassword: password.text));
-    if (response == true) {
+    var response = await db.login(Users(
+        usrName: username.text,
+        usrEmail: useremail.text,
+        usrPassword: password.text,
+        usrTelefono: usertelefono.text));
+    if (response != null) {
       //If login is correct, then goto home
       if (!mounted) return;
+      print(response[0].usrId);
+      setState(() {
+        userIdGlobal = response[0].usrId as int;
+        userIdGlobal = response[0].usrId as int;
+      });
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Listados()));
     } else {
@@ -63,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   "lib/assets/login_header.png",
                   width: MediaQuery.of(context).size.width,
                 ),
-                Text('Iniciar Sessión',
+                const Text('Iniciar Sessión',
                     style: TextStyle(
                       fontSize: 20,
                     )),
@@ -84,21 +96,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.deepPurple.withOpacity(.2)),
+                            borderRadius: BorderRadius.circular(8),
+                            //color: Colors.deepPurple.withOpacity(.2),
+                            color: Colors.white,
+                          ),
                           child: TextFormField(
                             controller: username,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "username is required";
+                                return "Email is required";
                               }
                               return null;
                             },
                             decoration: const InputDecoration(
-                              icon: Icon(Icons.person),
-                              border: InputBorder.none,
-                              hintText: "Username",
-                            ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                icon: Icon(Icons.email),
+                                border: InputBorder.none,
+                                hintText: "Email",
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                )),
                           ),
                         ),
 
@@ -110,21 +131,32 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Colors.deepPurple.withOpacity(.2)),
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
                               child: TextFormField(
                                 controller: password,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return "password is required";
+                                    return "Contraseña is required";
                                   }
                                   return null;
                                 },
                                 obscureText: !isVisible,
                                 decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
                                     icon: const Icon(Icons.lock),
                                     border: InputBorder.none,
-                                    hintText: "Password",
+                                    hintText: "contraseña",
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black),
+                                    ),
                                     suffixIcon: IconButton(
                                         onPressed: () {
                                           //In here we will create a click to show and hide the password a toggle button

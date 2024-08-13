@@ -6,7 +6,7 @@ import 'package:sqlite_flutter_crud/JsonModels/book_model.dart';
 import 'package:sqlite_flutter_crud/JsonModels/users.dart';
 
 class DatabaseHelper {
-  final databaseName = "canchas18.db";
+  final databaseName = "canchas19.db";
   String noteTable =
       "CREATE TABLE notes (noteId INTEGER PRIMARY KEY AUTOINCREMENT, noteTitle TEXT NOT NULL, noteContent TEXT NOT NULL, createdAt TEXT DEFAULT CURRENT_TIMESTAMP)";
 
@@ -26,7 +26,7 @@ class DatabaseHelper {
   //Now we must create our user table into our sqlite db
 
   String users =
-      "create table users (usrId INTEGER PRIMARY KEY AUTOINCREMENT, usrName TEXT UNIQUE, usrPassword TEXT)";
+      "create table users (usrId INTEGER PRIMARY KEY AUTOINCREMENT, usrName TEXT UNIQUE, usrEmail TEXT, usrPassword TEXT, usrTelefono TEXT)";
 
   //We are done in this section
 
@@ -52,16 +52,16 @@ class DatabaseHelper {
 
   //Login Method
 
-  Future<bool> login(Users user) async {
+  Future<List<Users>> login(Users user) async {
     final Database db = await initDB();
 
     // I forgot the password to check
     var result = await db.rawQuery(
         "select * from users where usrName = '${user.usrName}' AND usrPassword = '${user.usrPassword}'");
     if (result.isNotEmpty) {
-      return true;
+      return result.map((e) => Users.fromMap(e)).toList();
     } else {
-      return false;
+      return result.map((e) => Users.fromMap(e)).toList();
     }
   }
 
@@ -130,6 +130,13 @@ class DatabaseHelper {
     final Database db = await initDB();
     List<Map<String, Object?>> result = await db.query('canchas');
     return result.map((e) => CanchaModel.fromMap(e)).toList();
+  }
+
+  //Get users
+  Future<List<Users>> getUsers() async {
+    final Database db = await initDB();
+    List<Map<String, Object?>> result = await db.query('users');
+    return result.map((e) => Users.fromMap(e)).toList();
   }
 
   //Get cancha

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sqlite_flutter_crud/JsonModels/cancha_model.dart';
+import 'package:sqlite_flutter_crud/JsonModels/users.dart';
 import 'package:sqlite_flutter_crud/SQLite/sqlite.dart';
 import 'package:sqlite_flutter_crud/Views/cancha_detalle.dart';
 import 'package:sqlite_flutter_crud/Views/cancha_detalle2.dart';
 import 'package:sqlite_flutter_crud/Views/cancha_detalle3.dart';
+import 'package:sqlite_flutter_crud/Views/detail_screen.dart';
+import 'package:sqlite_flutter_crud/Views/my_record.dart';
+import 'package:sqlite_flutter_crud/Views/variables.dart';
 
 class Canchas2 extends StatefulWidget {
   const Canchas2({super.key});
@@ -15,6 +19,7 @@ class Canchas2 extends StatefulWidget {
 class _CanchasState extends State<Canchas2> {
   late DatabaseHelper handler;
   late Future<List<CanchaModel>> canchas;
+  late Future<List<Users>> users;
   final db = DatabaseHelper();
 
   final title = TextEditingController();
@@ -26,15 +31,23 @@ class _CanchasState extends State<Canchas2> {
   void initState() {
     handler = DatabaseHelper();
     canchas = handler.getCanchas();
+    users = handler.getUsers();
 
     handler.initDB().whenComplete(() {
       canchas = getAllCanchas();
+    });
+    handler.initDB().whenComplete(() {
+      users = getAllUsers();
     });
     super.initState();
   }
 
   Future<List<CanchaModel>> getAllCanchas() {
     return handler.getCanchas();
+  }
+
+  Future<List<Users>> getAllUsers() {
+    return handler.getUsers();
   }
 
   //Search method here
@@ -47,6 +60,7 @@ class _CanchasState extends State<Canchas2> {
   Future<void> _refresh() async {
     setState(() {
       canchas = getAllCanchas();
+      users = getAllUsers();
     });
   }
 
@@ -169,10 +183,10 @@ class _CanchasState extends State<Canchas2> {
 
                     return ListView(
                       children: [
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(left: 20, top: 20),
-                          child: Text('Hola Andrea',
-                              style: TextStyle(
+                          child: Text(userNameGlobal,
+                              style: const TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold)),
                         ),
                         const Divider(
@@ -268,6 +282,10 @@ class _CanchasState extends State<Canchas2> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
+                                                              /*RecordPage(
+                                                          cancha: items[index],
+                                                          key: null,
+                                                        ),*/
                                                               CanchaDetalle(
                                                                   canchaId: items[
                                                                           index]
@@ -280,13 +298,10 @@ class _CanchasState extends State<Canchas2> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              CanchaDetalle2(
-                                                                  canchaId: items[
-                                                                          index]
-                                                                      .canchaId,
-                                                                  canchaTitle: items[
-                                                                          index]
-                                                                      .canchaTitle)));
+                                                              MyRecord(
+                                                                cancha: items[
+                                                                    index],
+                                                              )));
                                                 } else if (canchaId == 3) {
                                                   Navigator.push(
                                                       context,
@@ -527,7 +542,7 @@ class _CanchasState extends State<Canchas2> {
   }
 }
 
-class CardExample extends StatelessWidget {
+/*class CardExample extends StatelessWidget {
   const CardExample({super.key, required this.canchaId});
 
   final int canchaId;
@@ -584,7 +599,7 @@ class CardExample extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CanchaDetalle(
+                            builder: (context) => CanchaDetalle(
                                 canchaId: 1, canchaTitle: 'titulo')));
                   },
                   child: const Text("Reservar",
@@ -597,4 +612,4 @@ class CardExample extends StatelessWidget {
       ),
     );
   }
-}
+}*/

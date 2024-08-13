@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sqlite_flutter_crud/JsonModels/book_model.dart';
 import 'package:sqlite_flutter_crud/JsonModels/cancha_model.dart';
 import 'package:sqlite_flutter_crud/SQLite/sqlite.dart';
-import 'package:sqlite_flutter_crud/Views/cancha_detalle.dart';
 
 class CanchaDetalle3 extends StatefulWidget {
   /*const CanchaDetalle2(int i, {Key? key, required this.canchaId})
@@ -92,7 +91,7 @@ class _CanchasState3 extends State<CanchaDetalle3> {
 
                 return SingleChildScrollView(
                     child: Padding(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
@@ -105,12 +104,12 @@ class _CanchasState3 extends State<CanchaDetalle3> {
                               ),
                             ),
                             const SizedBox(height: 0),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20.0),
                               child: Text('Cancha Multiple'),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20.0),
                               child: Text('Cancha Tipo C'),
                             ),
                             const Padding(
