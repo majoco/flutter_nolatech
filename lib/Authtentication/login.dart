@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print(response[0].usrId);
       setState(() {
         userIdGlobal = response[0].usrId as int;
-        userIdGlobal = response[0].usrId as int;
+        userNameGlobal = response[0].usrName;
       });
 
       Navigator.pushReplacement(
